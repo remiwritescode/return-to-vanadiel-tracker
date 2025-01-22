@@ -11,3 +11,11 @@ I run it daily on a crontab 🤷🏻‍♀️
 ### Requirements
 - MacOS
 - Ruby
+
+### Debugging
+
+If you add this to a crontab and it's not working, I found that it sends your user mail that you can read to see the error message!
+
+`cat /var/mail/<your_cron_user>`
+
+Also, while the env for running the script in a terminal works, I had to specify the executable when running it in cron to get my gems loaded.
