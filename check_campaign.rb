@@ -6,8 +6,9 @@ require 'time'
 
 RETURN_TO_VANADIEL_CAMPAIGN_CONFIG_XML_URL = 'http://www.playonline.com/ff11/campaign/wcb/i18n/_common.xml'.freeze
 JAPANESE_DATE_REGEX = /(?<year>\d+)年(?<month>\d+)月(?<day>\d+)日/.freeze
-CAMPAIGN_DATE_STORAGE_FILE = './campaign_date.txt'
-LAST_CAMPAIGN_DATE = File.read(CAMPAIGN_DATE_STORAGE_FILE)
+CURRENT_FILE_DIRECTORY = File.dirname(__FILE__)
+CAMPAIGN_DATE_STORAGE_FILE_PATH = "#{CURRENT_FILE_DIRECTORY}/campaign_date.txt"
+LAST_CAMPAIGN_DATE = File.read(CAMPAIGN_DATE_STORAGE_FILE_PATH)
 
 conn = Faraday.new()
 response = conn.get do |req|
@@ -29,5 +30,5 @@ campaign_start_date = Date.new(
 
 if campaign_start_date > Date.parse(LAST_CAMPAIGN_DATE)
   `osascript -e 'tell app (path to frontmost application as text) to display dialog "A new Free FFXI Login Campaign is coming on #{campaign_start_date.to_s}!"'`
-  File.write(CAMPAIGN_DATE_STORAGE_FILE, campaign_start_date.to_s)
+  File.write(CAMPAIGN_DATE_STORAGE_FILE_PATH, campaign_start_date.to_s)
 end
